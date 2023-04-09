@@ -1,11 +1,11 @@
 <template>
     <header>
         <label class="checkbox__container">
-            <input type="checkbox" checked="checked">
+            <input type="checkbox" v-bind:checked="useEmail.allSelected" @click="useEmail.selectAllEmails">
             <span class="checkmark"></span>
         </label>
         <div>
-        <button>Mark as read(r)</button>
+        <button @click="useEmail.markAsRead">Mark as read(r)</button>
         <button>Archive(a)</button>
         </div>
     </header>
@@ -15,12 +15,14 @@
         <div 
         :class="{'email__container': true, 'read__email': email.isRead}" 
         v-for="email in useEmail.emails" :key="email.id" 
-        @click="useEmail.setShowLeftSideBar(email.id); useEmail.readEmail(email.id)">
+        >
+        <div class="left__container">
             <label class="checkbox__container">
-                <input type="checkbox" checked="checked">
+                <input type="checkbox" v-bind:checked="email.isSelected" :value="email.isSelected" @change="useEmail.selectEmail(email.id)">
                 <span class="checkmark"></span>
             </label>
-            <span class="email__content">{{ email.title }}</span>
+          </div>
+            <span class="email__content" @click="useEmail.setShowLeftSideBar(email.id); useEmail.readEmail(email.id)">{{ email.title }}</span>
             <p> | {{ useEmail.isRead(email.id) }}</p>
         </div>
       </div>
@@ -92,6 +94,7 @@ button{
   height: 25px;
   width: 25px;
   background-color: #eee;
+  z-index: 99;
 }
 
 .checkbox__container:hover input ~ .checkmark {
@@ -141,6 +144,10 @@ button{
 
 .read__email{
   opacity: 0.5;
+}
+
+.email__content{
+  cursor: pointer;
 }
 
 </style>

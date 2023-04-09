@@ -5,6 +5,7 @@ export const useEmailStore = defineStore("email", {
     currentView: "Inbox",
     showLeftSideBar: true,
     currentEmail: {},
+    selectedEmails: [],
     emails: [
       {
         id: 1,
@@ -49,9 +50,43 @@ export const useEmailStore = defineStore("email", {
       state.emails.filter((email) => email.isArchived === true).length,
     selectedCount: (state) =>
       state.emails.filter((email) => email.isSelected === true).length,
+    allSelected: (state) => state.emails.every((email) => email.isSelected),
   },
 
   actions: {
+    selectEmail(emailId) {
+      const email = this.emails.find((e) => e.id === emailId);
+      console.log(this.selectedEmails);
+
+      if (email) {
+        const selected = email.isSelected;
+
+        email.isSelected = !selected;
+        if (!selected) {
+          this.selectedEmails?.push(email);
+        } else {
+          const index = this.selectedEmails.findIndex((e) => e.id === email.id);
+          this.selectedEmails.splice(index, 1);
+        }
+      }
+      return;
+    },
+    markAsRead() {
+      console.log("Marking as read");
+      this.selectedEmails.forEach((email) => {
+        email.isRead = true;
+        email.isSelected = !email.isSelected;
+      });
+      this.selectedEmails = [];
+    },
+    selectAllEmails() {
+      console.log("emails...");
+      this.emails.forEach((email) => {
+        email.isSelected = !email.isSelected;
+        this.selectedEmails.push(email);
+      });
+      console.log(this.emails);
+    },
     setShowLeftSideBar(emailId) {
       console.log(emailId);
       // open sidebar
@@ -85,13 +120,6 @@ export const useEmailStore = defineStore("email", {
     //   // set isSelected attr
     // },
     readEmail(emailId) {
-      // set current email to read
-      // mark email as read
-      //   const currentEmail = this.emails.filter((email) => email.id === emailId);
-      //   currentEmail.isRead = true;
-
-      console.log("reading email...");
-
       //  read current email
       const updatedEmails = this.emails.map((email) => {
         if (email.id === emailId) {
@@ -107,6 +135,32 @@ export const useEmailStore = defineStore("email", {
       this.emails = updatedEmails;
       return;
     },
+    // selectEmail(emailId) {
+    //   //   const updatedEmails = this.emails.map((email) => {
+    //   //     if (email.id === emailId) {
+    //   //       return {
+    //   //         ...email,
+    //   //         isSelected: true,
+    //   //       };
+    //   //     }
+    //   //     return email;
+    //   //   });
+    //   //   this.emails = updatedEmails;
+    //   //   return;
+    //   const email = this.emails.find((e) => e.id === emailId);
+    //   if (email) {
+    //     const selected = email.isSelected;
+    //     email.isSelected = !selected;
+    //     if (!selected) {
+    //       this.selectedEmails.push(email);
+    //     } else {
+    //       const index = this.selectedEmails.findIndex((e) => e.id === email.id);
+    //       this.selectedEmails.splice(index, 1);
+    //     }
+    //   }
+
+    //   return;
+    // },
     // archiveEmail(emailId) {
     //   // set archive attr
     // },
