@@ -1,6 +1,6 @@
 <template>
     <h2 class="heading">{{ useEmail.currentView }}</h2>
-    <h1>Emails Selected(2)</h1>
+    <h1>Emails Selected({{ useEmail.selectedEmails.length }})</h1>
 </template>
 
 <script>
