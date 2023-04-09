@@ -12,7 +12,7 @@
 
     <main>
       <div v-if="useEmail.currentView === 'Inbox'">
-        <div class="email__container">
+        <div class="email__container" @click="useEmail.setShowLeftSideBar()">
             <label class="checkbox__container">
                 <input type="checkbox" checked="checked">
                 <span class="checkmark"></span>
