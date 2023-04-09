@@ -2,7 +2,7 @@
   <main class="main__container">
   <LeftSidebar />
   <RightSidebar />
-  <EmailContainer />
+  <EmailContainer :emails="emails" />
 </main>
 
 </template>
@@ -18,7 +18,20 @@ export default{
     LeftSidebar,
     RightSidebar,
     EmailContainer
-  }
+  },
+  // props: ['archived', 'emails'],
+  data(){
+        return {
+            archived: [],
+            emails: [
+                {id: 1, title: "Email One", content: "Email One Content", isRead: false, isArchive: false},
+                {id: 2, title: "Email Two", content: "Email Two Content", isRead: false, isArchive: false},
+                {id: 3, title: "Email Three", content: "Email Three Content", isRead: false, isArchive: false},
+                {id: 4, title: "Email Four", content: "Email Four Content", isRead: false, isArchive: false},
+                {id: 5, title: "Email Five", content: "Email Five Content", isRead: false, isArchive: false},
+            ]
+        }
+    },
 }
 
 

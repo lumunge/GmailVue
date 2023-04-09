@@ -1,7 +1,10 @@
 <template>
     <main class="container">
+    <h1>HereEE</h1>
+
     <EmailHeader />
     <EmailContent />
+    <h1>{{ emails }}</h1>
 </main>
 </template>
 
@@ -15,6 +18,7 @@ export default{
         EmailHeader
     }
 }
+// console.log("Emails: ", emails);
 
 </script>
 

@@ -1,12 +1,22 @@
 <template>
     <main class="left__sidebar">
-    <button class="btn">Inbox(3)</button>
-    <button class="btn">Archive(0)</button>
+    <button class="btn" @click="useEmail.changeView('Inbox')">Inbox(3)</button>
+    <button class="btn" @click="useEmail.changeView('Archive')">Archive(0)</button>
     <button class="btn logout__btn">Logout</button>
 </main>
 </template>
 
 <script>
+import {useEmailStore} from '@/store/useEmailStore'
+
+export default{
+    name: "EmailHeader",
+    data(){
+        return{
+            useEmail: useEmailStore()
+        }
+    }
+}
 
 </script>
 

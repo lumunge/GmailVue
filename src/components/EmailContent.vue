@@ -11,6 +11,7 @@
     </header>
 
     <main>
+      <div v-if="useEmail.currentView === 'Inbox'">
         <div class="email__container">
             <label class="checkbox__container">
                 <input type="checkbox" checked="checked">
@@ -32,30 +33,24 @@
             </label>
             <span class="email__content">Email three</span>
         </div>
+      </div>
+      <div v-if="useEmail.currentView === 'Archive'">
+        <h1>Archived Here</h1>
+      </div>
     </main>
 </template>
 
 <script>
-export default{
-    data(){
-        return {
-            emails: [
-                {id: 1, title: "Email One", content: "Email One Content", isRead: false, isArchive: false},
-                {id: 2, title: "Email Two", content: "Email Two Content", isRead: false, isArchive: false},
-                {id: 3, title: "Email Three", content: "Email Three Content", isRead: false, isArchive: false},
-                {id: 4, title: "Email Four", content: "Email Four Content", isRead: false, isArchive: false},
-                {id: 5, title: "Email Five", content: "Email Five Content", isRead: false, isArchive: false},
-            ]
-        }
-    },
-    methods: {
-        readEmail(){}, // read single email
-        markAsRead(){}, // mark single/multiple emails as read
-        archiveEmail(){}, // move email to archive
+import {useEmailStore} from '@/store/useEmailStore'
 
+export default{
+    name: "EmailHeader",
+    data(){
+        return{
+            useEmail: useEmailStore()
+        }
     }
 }
-
 
 </script>
 
