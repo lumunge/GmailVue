@@ -12,26 +12,12 @@
 
     <main>
       <div v-if="useEmail.currentView === 'Inbox'">
-        <div class="email__container" @click="useEmail.setShowLeftSideBar()">
+        <div class="email__container" @click="useEmail.setShowLeftSideBar()" v-for="email in useEmail.emails" :key="email.id">
             <label class="checkbox__container">
                 <input type="checkbox" checked="checked">
                 <span class="checkmark"></span>
             </label>
-            <span class="email__content">Email One</span>
-        </div>
-        <div class="email__container">
-            <label class="checkbox__container">
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-            </label>
-            <span class="email__content">Email two</span>
-        </div>
-        <div class="email__container">
-            <label class="checkbox__container">
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-            </label>
-            <span class="email__content">Email three</span>
+            <span class="email__content">{{ email.title }}</span>
         </div>
       </div>
       <div v-if="useEmail.currentView === 'Archive'">
