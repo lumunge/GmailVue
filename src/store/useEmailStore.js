@@ -6,6 +6,7 @@ export const useEmailStore = defineStore("email", {
     showLeftSideBar: true,
     currentEmail: {},
     selectedEmails: [],
+    archivedEmails: [],
     emails: [
       {
         id: 1,
@@ -46,8 +47,7 @@ export const useEmailStore = defineStore("email", {
   getters: {
     unreadCount: (state) =>
       state.emails.filter((email) => email.isRead === false).length,
-    archivedCount: (state) =>
-      state.emails.filter((email) => email.isArchived === true).length,
+    archivedCount: (state) => state.archivedEmails.length,
     selectedCount: (state) =>
       state.emails.filter((email) => email.isSelected === true).length,
     allSelected: (state) => state.emails.every((email) => email.isSelected),
@@ -93,21 +93,6 @@ export const useEmailStore = defineStore("email", {
       this.showLeftSideBar = this.showLeftSideBar == true ? false : true;
       // set selected email
       this.currentEmail = this.emails.find((email) => email.id === emailId);
-
-      //   console.log("Curent Email: ", this.currentEmail);
-
-      // read current email
-      //   const updatedEmails = this.emails.map((email) => {
-      //     if (email.id === emailId) {
-      //       return {
-      //         ...email,
-      //         isRead: true,
-      //       };
-      //     }
-      //     console.log(email);
-      //     return email;
-      //   });
-      //   this.emails = updatedEmails;
     },
     changeView(newView) {
       this.currentView = newView;
@@ -135,35 +120,18 @@ export const useEmailStore = defineStore("email", {
       this.emails = updatedEmails;
       return;
     },
-    // selectEmail(emailId) {
-    //   //   const updatedEmails = this.emails.map((email) => {
-    //   //     if (email.id === emailId) {
-    //   //       return {
-    //   //         ...email,
-    //   //         isSelected: true,
-    //   //       };
-    //   //     }
-    //   //     return email;
-    //   //   });
-    //   //   this.emails = updatedEmails;
-    //   //   return;
-    //   const email = this.emails.find((e) => e.id === emailId);
-    //   if (email) {
-    //     const selected = email.isSelected;
-    //     email.isSelected = !selected;
-    //     if (!selected) {
-    //       this.selectedEmails.push(email);
-    //     } else {
-    //       const index = this.selectedEmails.findIndex((e) => e.id === email.id);
-    //       this.selectedEmails.splice(index, 1);
-    //     }
-    //   }
-
-    //   return;
-    // },
-    // archiveEmail(emailId) {
-    //   // set archive attr
-    // },
+    archiveEmail() {
+      const emailIndex = this.emails.findIndex(
+        (email) => email.id === this.currentEmail.id
+      );
+      if (emailIndex !== -1) {
+        const archivedEmail = this.emails[emailIndex];
+        archivedEmail.isArchived = true;
+        this.archivedEmails.push(archivedEmail);
+        this.emails.splice(emailIndex, 1);
+      }
+      console.log(this.archivedEmails);
+    },
     // markAsRead(emailIds) {
     //   // mark selected email(s) as read
     // },

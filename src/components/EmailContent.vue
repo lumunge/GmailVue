@@ -27,7 +27,19 @@
         </div>
       </div>
       <div v-if="useEmail.currentView === 'Archive'">
-        <h1>Archived Here</h1>
+        <div 
+        :class="{'email__container': true, 'read__email': email.isRead}" 
+        v-for="email in useEmail.archivedEmails" :key="email.id" 
+        >
+        <div class="left__container">
+            <label class="checkbox__container">
+                <input type="checkbox" v-bind:checked="email.isSelected" :value="email.isSelected" @change="useEmail.selectEmail(email.id)">
+                <span class="checkmark"></span>
+            </label>
+          </div>
+            <span class="email__content" @click="useEmail.setShowLeftSideBar(email.id); useEmail.readEmail(email.id)">{{ email.title }}</span>
+            <p> | {{ useEmail.isRead(email.id) }}</p>
+        </div>
       </div>
     </main>
 </template>
