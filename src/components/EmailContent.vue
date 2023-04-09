@@ -12,12 +12,16 @@
 
     <main>
       <div v-if="useEmail.currentView === 'Inbox'">
-        <div class="email__container" @click="useEmail.setShowLeftSideBar()" v-for="email in useEmail.emails" :key="email.id">
+        <div 
+        :class="{'email__container': true, 'read__email': email.isRead}" 
+        v-for="email in useEmail.emails" :key="email.id" 
+        @click="useEmail.setShowLeftSideBar(email.id); useEmail.readEmail(email.id)">
             <label class="checkbox__container">
                 <input type="checkbox" checked="checked">
                 <span class="checkmark"></span>
             </label>
             <span class="email__content">{{ email.title }}</span>
+            <p> | {{ useEmail.isRead(email.id) }}</p>
         </div>
       </div>
       <div v-if="useEmail.currentView === 'Archive'">
@@ -126,12 +130,17 @@ button{
 
 /* email content */
 .email__container{
-    background-color: #333;
-    color: #fff;
-    padding: 2rem 10px;
+    background-color: #B9BBB6;
+    color: #333;
+    padding: 1.5rem 10px;
     display: flex;
     align-items: center;
     margin: 10px 0;
+    border-radius: 10px;
+}
+
+.read__email{
+  opacity: 0.5;
 }
 
 </style>

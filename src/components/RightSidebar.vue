@@ -1,6 +1,5 @@
 <template>
     <div :class="{'sidebar__container': useEmail.showLeftSideBar, 'sidebar__container active': !useEmail.showLeftSideBar}" >
-        <!-- <div class="sidebar__container"> -->
     <header class="sidebar__header">
         <div class="sidebar__top__header">
             Close(esc)
@@ -12,10 +11,10 @@
     </header>
     <main>
         <div>
-            <h4>Email Title</h4>
+            <h4>{{ useEmail.currentEmail?.title }}</h4>
         </div>
         <div>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem, aspernatur.</p>
+            <p>{{ useEmail.currentEmail?.body }}</p>
         </div>
     </main>
 </div>
