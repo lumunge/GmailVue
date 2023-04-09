@@ -79,6 +79,31 @@ export const useEmailStore = defineStore("email", {
       });
       this.selectedEmails = [];
     },
+    markAsArchived() {
+      console.log("Marking as archive");
+      // Create a copy of the selected emails array
+      const selectedEmailsCopy = [...this.selectedEmails];
+
+      // Loop through the selected emails array
+      selectedEmailsCopy.forEach((selectedEmail) => {
+        // Find the index of the selected email in the emails array
+        const index = this.emails.findIndex(
+          (email) => email.id === selectedEmail.id
+        );
+
+        // Change the isArchived property of the selected email to true
+        selectedEmail.isArchived = true;
+
+        // Remove the selected email from the emails array and add it to the archivedEmails array
+        if (index > -1) {
+          const [archivedEmail] = this.emails.splice(index, 1);
+          this.archivedEmails.push(archivedEmail);
+        }
+      });
+
+      // Clear the selectedEmails array
+      this.selectedEmails = [];
+    },
     selectAllEmails() {
       console.log("emails...");
       this.emails.forEach((email) => {

@@ -6,7 +6,7 @@
         </label>
         <div>
         <button @click="useEmail.markAsRead">Mark as read(r)</button>
-        <button>Archive(a)</button>
+        <button @click="useEmail.markAsArchived">Archive(a)</button>
         </div>
     </header>
 
